@@ -50,6 +50,7 @@ fertilizerquantity = VAL(fertilizerquantity$)
 IF fertilizerquantity <> INT(fertilizerquantity) OR fertilizerquantity < 0 THEN
     cheated = 1
     PRINT "Shopkeeper: Entering the black market, are we?"
+END IF
 IF credits >= (fertilizerquantity * 50) THEN
     credits = credits - (fertilizerquantity * 50)
     fertilizer = fertilizer + (fertilizerquantity)
@@ -64,6 +65,7 @@ bucketquantity = VAL(bucketquantity$)
 IF bucketquantity <> INT(bucketquantity) OR bucketquantity < 0 THEN
     cheated = 1
     PRINT "Shopkeeper: Entering the black market, are we?"
+END IF
 IF credits >= (bucketquantity * 50) THEN
     credits = credits - (bucketquantity * 50)
     rainbuckets = rainbuckets + (bucketquantity)
