@@ -22,7 +22,7 @@ LOOP
 CLS
 PRINT "Seeds purchased!"
 PRINT "75 credits remaining."
-'You can buy negative amounts of each item, as well as decimals. This can help you out a little in the beginning.
+'You can buy negative amounts of each item, as well as decimals. This was originally an exploit, but I thought it was kind of fun so I kept it.
 credits = 75
 fertilizer = 0
 water = 0
@@ -31,6 +31,10 @@ PRINT
 'This is my code for purchasing watering cans.
 INPUT "Shopkeeper: How many watering cans would you like to purchase?", waterquantity$
 waterquantity = VAL(waterquantity$)
+IF waterquantity <> INT(waterquantity) OR waterquantity < 0 THEN
+    cheated = 1
+    PRINT "Shopkeeper: Entering the black market, are we?"
+END IF
 IF credits >= (waterquantity * 25) THEN
     credits = credits - (waterquantity * 25)
     water = water + (waterquantity * 5)
@@ -43,6 +47,9 @@ PRINT
 'This is my code for purchasing fertilizer.
 INPUT "Shopkeeper: How much fertilizer would you like to purchase?", fertilizerquantity$
 fertilizerquantity = VAL(fertilizerquantity$)
+IF fertilizerquantity <> INT(fertilizerquantity) OR fertilizerquantity < 0 THEN
+    cheated = 1
+    PRINT "Shopkeeper: Entering the black market, are we?"
 IF credits >= (fertilizerquantity * 50) THEN
     credits = credits - (fertilizerquantity * 50)
     fertilizer = fertilizer + (fertilizerquantity)
@@ -54,6 +61,9 @@ PRINT
 'This is my code for purchasing a rain bucket.
 INPUT "Shopkeeper: How many rain buckets would you like to purchase?", bucketquantity$
 bucketquantity = VAL(bucketquantity$)
+IF bucketquantity <> INT(bucketquantity) OR bucketquantity < 0 THEN
+    cheated = 1
+    PRINT "Shopkeeper: Entering the black market, are we?"
 IF credits >= (bucketquantity * 50) THEN
     credits = credits - (bucketquantity * 50)
     rainbuckets = rainbuckets + (bucketquantity)
@@ -148,6 +158,7 @@ DO WHILE day <= 35 AND plantalive = 1
     key$ = INKEY$
 'This is the code to skip to next day.
     IF key$ = "*" THEN
+        cheated = 1
         wateredyet = 1
         fertilizerneeded = 0
         key$ = "6"
@@ -284,17 +295,23 @@ DO WHILE day <= 35 AND plantalive = 1
     LOOP UNTIL key$ = "6"
         IF wateredyet = 0 OR fertilizerneeded = 1 THEN
             CLS
-            score = credits + flower + water + fertilizer * 5
+            score = (credits + flower + water + fertilizer) * 5
             PRINT "Day "; day
             PRINT
             PRINT "Your grass wilted. Game Over."
             PRINT
             PRINT "Score: "; score
+            PRINT
+IF cheated = 1 THEN
+        PRINT "(But you cheated.)"
+        PRINT
+    END IF
             PRINT "Press space to quit."
             DO
                 deathkey$ = INKEY$
 'This is the code for reviving.
                     IF deathkey$ = "r" THEN
+                        cheated = 1
                         wateredyet = 1
                         fertilizerneeded = 0
                         plantalive = 1
@@ -315,7 +332,7 @@ DO WHILE day <= 35 AND plantalive = 1
 'This is the win screen.
 IF day > 35 THEN
     CLS
-    score = credits + flower + water + fertilizer + 1000 * 5
+    score = (credits + flower + water + fertilizer) * 5 + 500
     PRINT "They said you needed to touch grass."
     PRINT
     PRINT "But you wouldn't listen."
@@ -330,5 +347,8 @@ IF day > 35 THEN
     PRINT
     PRINT "Game Over. You Win!!!"
     PRINT
-    PRINT "Final Score: "; score
+    PRINT "Score: "; score
+    IF cheated = 1 THEN
+        PRINT "(But you cheated.)"
+    END IF
 END IF
