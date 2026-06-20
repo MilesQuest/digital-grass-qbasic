@@ -284,10 +284,12 @@ DO WHILE day <= 35 AND plantalive = 1
     LOOP UNTIL key$ = "6"
         IF wateredyet = 0 OR fertilizerneeded = 1 THEN
             CLS
+            score = credits + flower + water + fertilizer * 5
             PRINT "Day "; day
             PRINT
             PRINT "Your grass wilted. Game Over."
             PRINT
+            PRINT "Score: "; score
             PRINT "Press space to quit."
             DO
                 deathkey$ = INKEY$
@@ -312,7 +314,8 @@ DO WHILE day <= 35 AND plantalive = 1
     LOOP
 'This is the win screen.
 IF day > 35 THEN
-CLS
+    CLS
+    score = credits + flower + water + fertilizer + 1000 * 5
     PRINT "They said you needed to touch grass."
     PRINT
     PRINT "But you wouldn't listen."
@@ -326,4 +329,6 @@ CLS
     PRINT "Thanks for playing my game. I had a lot of fun coding it, and hopefully you enjoyed playing it."
     PRINT
     PRINT "Game Over. You Win!!!"
+    PRINT
+    PRINT "Final Score: "; score
 END IF
